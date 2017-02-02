@@ -1,0 +1,95 @@
+//inputs: char letters[]- before delete function
+//output: char Array[] -  after delete function
+// program to delete letters that appear more that one and 
+//move the others behind the deleted chracter fowrd to take the spot
+
+
+
+#include "stdafx.h"
+#include <array>
+#include <iostream>
+using namespace std;
+
+#define ARRAY_LEN 10 // creates a constant variable for the array
+
+void delete_repeats(char next[], int& target);// deletes repeated letters in the array and moves the other characters up a spot
+
+
+int main(int argc, char* argv[])
+{
+	cout << "This program deletes any repeated characters.\n";
+
+	// crates the partially filled array
+	char letters[ARRAY_LEN];
+	letters[0] = 'a';
+	letters[1] = 'a';
+	letters[2] = 'a';
+	letters[3] = 'c';
+	letters[4] = 'b';
+	letters[5] = 'd';
+	
+	letters[6] = '\0';
+
+	
+	int size = 7;
+
+	// shows the original array
+	cout << " original order: ";
+	for (int index = 0; index < size; index++)
+	{
+		cout << letters[index] << " ";
+		
+	}
+	cout << endl;
+	cout << endl;
+	
+
+	 // function that fixes the array
+	delete_repeats(letters,size);
+
+	cout << "In sorted order the letters are:\n";
+	for (int index = 0; index < size; index++)
+	{
+		cout << letters[index];
+	}
+	cout << endl;
+	cout << endl;
+	
+
+	return 0;
+}
+
+
+
+void delete_repeats(char next[], int& target)// function to fix array
+{
+	int modified = 0;
+	char temp[ARRAY_LEN+1];
+	memset(temp, 0, sizeof(temp));
+	for (int i = 0; i < target; i++)
+	{
+		for (int j = i + 1; j < target; j++)// finds the matches and replaces them with spaces
+		{
+			if (next[i] == next[j])
+			{
+				next[j] = ' ';
+				modified++;
+				
+			}
+		}
+	}
+	for (int a = 0,b=0; a < target; a++)// adds the characters to another array, ignoring the spaces
+	{
+		if (next[a] != ' ')
+		{
+			temp[b] = next[a];
+			b++;
+			
+		}
+		
+	}
+	target = strlen(temp);// sets the array length to the same as the target
+	
+	strcpy_s((char *)&next[0], ARRAY_LEN, (char *)temp);// copies the array for the output
+
+	}
